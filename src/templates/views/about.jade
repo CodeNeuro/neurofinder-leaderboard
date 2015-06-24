@@ -1,0 +1,161 @@
+.row.main
+
+	.column-9.suffix-2(style='margin-left: 30px; margin-bottom: 50px')
+
+		h2(style='margin-top:55px')
+			| About
+
+		hr
+
+		h3
+			| Goal
+
+		p
+			| Reproducible data analysis requires validating methods against standard data sets. 
+
+		p
+			| In neuroscience, new analyses are repeatedly developed to solve problems faced by nearly all researchers. But comparisons between algorithms are rarely standardized across the community, or systematically vetted. Here we consider the "source extraction" problem: identifying neurons from time-varying image sequences. There are many existing algorithms but they have yet to be compared on standard data sets with ground truth.
+
+		p
+			| Our project has three core components:
+
+		ul
+			li.list-normal
+				| All algorithms will be run in a <em class="callout">common environment</em>, with a standardized format for both input data and algorithm output. We hope this will integrate a disparate collection of existing implementations.
+
+			li.list-normal
+				| We will compute benchmarks on a <em class="callout">regular basis</em>, so that researchers can quickly find out how their algorithm performs across many data sets with a variety of metrics. 
+
+			li.list-normal
+				|	All algorithms will be provided by and for the <em class="callout">community</em>, and our GitHub-integrated submission system ensures that all algorithms will be immediately available and usable.
+
+		br
+
+		p
+			| For this initial effort we have chosen a narrow focus: mouse two-photon calcium imaging with genetically encoded calcium indicators (e.g. GCaMP6). We will soon expand to incorporate other imaging modalities (light-sheet imaging, light-field imaging) and other species (zebrafish). 
+
+		hr
+
+		h3
+			| Data
+
+		p
+			| Data sets have been generously prepared by the following individuals and labs (more will be added as available):
+
+		ul
+
+			li.list-name
+				| Simon Peron and Karel Svoboda
+
+			li.list-name
+				| Adam Packer, Lloyd Russel, and Michael Hausser
+
+			li.list-name
+				| Philipp Bethge and Fritjof Helmchen
+
+			li.list-name
+				| Jeff Zaremba, Patrick Kaifosh, and Attila Losonczy
+
+		br
+
+		p
+			| All data sets for algorithm development are hosted via Amazon S3 at the 
+			a(href='http://datasets.codeneuro.org')
+				| CodeNeuro data repository  
+			| and can be accessed from instances running on EC2.
+
+		p
+			| In our standardized input format, data are organized into a folder with the following contents:
+
+		pre
+			code.
+				info.json 
+				images/image_t0.bin
+				images/image_t1.bin
+				...
+				images/conf.json
+				sources/sources.json
+
+		p
+			| The 
+			span.inline-code 
+				| info.json
+			| file contains metadata like contributors and imaging method (see an 
+			a(href="https://s3.amazonaws.com/neuro.datasets/challenges/neurofinder/00.00/info.json")
+				| example
+			| )
+
+		p 
+			| The 
+			span.inline-code 
+				| images
+			| folder contains one flat binary file per time point and a
+			span.inline-code 
+				| conf.json
+			| binary format specifcation:
+
+		pre
+			code.
+				{
+					"dims": [x,y],
+					"dtype": "uint16"
+				}
+
+		p
+			| Finally, the
+			span.inline-code 
+				| sources.json
+			| file contains describes the identified neurons using the following format:
+
+		pre
+			code.
+				[
+					{
+						"id" : 1,
+						"coordinates": [[x0,y0], [x1,y1], ...],
+						"values": [v0, v1, ...],
+						"bbox" : [xx,xy,yx,yy],
+						"centroid" : [x,y]
+					},
+					...
+				]
+
+		p
+			| where 
+			span.inline-code 
+				| coordinates
+			| are a list of the coordinates of pixels included in that source, and  
+			span.inline-code 
+				| values
+			| are an optional list of non-zero weights on those pixels (otherwise assumed to be binary). For the example training data, all sources have been manually vetted and curated, and a subset are based on an ground-truth anatomical nuclear marker.
+
+		hr
+
+		h3
+			| Who
+
+		p
+			| NeuroFinder is a community effort!
+
+		p
+			| The standard formats and evaluation metrics were decided at the 
+			a(href='http://codeneuro.org/2015/NYC')
+				| CodeNeuro NYC 
+			| hackathon, with contributions from Simon Peron, Adam Packer, Logan Grosenick, Nicholas Sofroniew, Darcy Peterka, Patrick Kaifosh, Jeff Zaremba, Ben Poole, Sophie Aimon, Tim Machado, Eliza Chang, and many others. 
+
+		p
+			| This website and automatic job runner was also begun at the hackathon and further developed by Matt Conlen, Maxwell Rebo, Jeremy Freeman, Michael Broxton, Aero Wang, and Yangbo Du.
+
+		hr
+
+		h3
+			| Contact
+
+		p
+			| If you have questions, difficulty submitting, or a dataset to add, please reach out on 
+			a(href='http://twitter.com/codeneuro')
+				| twitter 
+			| or join the 
+			a(href='https://gitter.im/CodeNeuro/neurofinder')
+				| chatroom
+			| .

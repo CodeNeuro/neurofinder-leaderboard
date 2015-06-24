@@ -1,0 +1,108 @@
+.leaderboard-container.noselect
+
+    .row.main
+        .column-12
+            - var datasets = this.collection.models[0].getDatasets();
+            .row
+                .column-10(style='margin-left: 20px')
+
+                    .row(style='margin-top: 40px; margin-bottom: 10px')
+                        .column-2.suffix-3
+                            h3(style='margin-top:14px; font-size: 24px')
+                                | Submission table
+
+                        .column-2
+                            p(style='text-align:right;margin-bottom:1px;font-style: italic')
+                                | Data set
+
+                            p(style='text-align:right;font-style:italic')
+                                |  Contributors
+
+                        .column-3
+
+                            p.dataset-name
+                                |  (hover for dataset info)
+
+                            p.dataset-contributors
+                                |  (hover for dataset info)
+
+
+                    .row
+                        for submission in this.collection.models
+                            table.subtable.noselect
+                                tbody
+                                    tr.overview(data-identifier="#{submission.id}")
+                                        td.avatar.desktop
+                                            img(src="#{submission.avatar}")
+                                        td.details
+                                            h5
+                                                | #{submission.algorithm} 
+                                                small
+                                                    | | #{submission.description}
+
+
+                                            .url
+                                                a(href="#{submission.pull_request}").pull-request
+                                                    | view pull request
+
+
+                                        td
+                                            .metric-label
+                                                | Accuracy
+
+                                        for dataset in datasets
+                                            - var val = submission.getMetricValueForDataset('accuracy', dataset);
+                                            - var mid = this.utils.getMidpointFromName('accuracy')
+                                            td(style="background-color:#{this.utils.getColorFromScore(val, 'accuracy', 'Blues')}; color: #{val > mid ? 'white' : 'black'};", class="number", data-data="#{dataset}")
+                                                | #{this.utils.preciseRound(val, 2)}
+
+
+                                        - var val = submission.getMetricValueForDataset('accuracy', 'overall');
+                                        - var mid = this.utils.getMidpointFromName('accuracy')
+                                        td(style="background-color:#{this.utils.getColorFromScore(val, 'accuracy', 'Blues')}; color: #{val > mid ? 'white' : 'black'};").number
+                                            | #{this.utils.preciseRound(val, 2)}
+                                        
+
+
+                                    tr(data-identifier="#{submission.id}").details
+
+                                        td    
+                                        td.submission-image
+                                            img(src="https://s3.amazonaws.com/code.neuro/neurofinder/images/#{submission.id}/#{datasets[0]}/sources.png", class="thumbnail", data-identifier="#{submission.id}")
+                                        
+                                        - var metric = submission.metrics.overlap
+                                        - var metricName = 'overlap'
+                                        td.metric-label
+                                            | #{metricName}
+
+                                        for dataset in datasets
+                                            - var val = submission.getMetricValueForDataset(metricName, dataset);
+                                            - var mid = this.utils.getMidpointFromName(metricName)
+                                            td(style="background-color:#{this.utils.getColorFromScore(val, metricName)}; color: #{val > mid ? 'white' : 'black'};", class="number", data-data="#{dataset}")
+                                                | #{this.utils.preciseRound(val, 2)}
+
+                                        - var val = submission.getMetricValueForDataset(metricName, 'overall');
+                                        - var mid = this.utils.getMidpointFromName(metricName);
+                                        td(style="background-color:#{this.utils.getColorFromScore(val, metricName)}; color: #{val > mid ? 'white' : 'black'};").number
+                                            | #{this.utils.preciseRound(val, 2)}
+
+
+                                    for metric, metricName in this._.omit(submission.metrics, 'accuracy', 'overlap')
+
+
+                                        tr(data-identifier="#{submission.id}").details
+                                            td
+                                            td
+                                            td.metric-label
+                                                | #{metricName}
+
+                                            for dataset in datasets
+                                                - var val = submission.getMetricValueForDataset(metricName, dataset);
+                                                - var mid = this.utils.getMidpointFromName(metricName);
+                                                td(style="background-color:#{this.utils.getColorFromScore(val, metricName)}; color: #{val > mid ? 'white' : 'black'};", class="number", data-data="#{dataset}")
+                                                    | #{this.utils.preciseRound(val, 2)}
+
+                                            - var val = submission.getMetricValueForDataset(metricName, 'overall');
+                                            - var mid = this.utils.getMidpointFromName(metricName);
+                                            td(style="background-color:#{this.utils.getColorFromScore(val, metricName)}; color: #{val > mid ? 'white' : 'black'};").number
+                                                | #{this.utils.preciseRound(val, 2)}

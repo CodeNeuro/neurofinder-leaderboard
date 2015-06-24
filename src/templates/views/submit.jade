@@ -1,0 +1,253 @@
+.row.main
+	
+	.column-9.suffix-2(style='margin-left: 30px; margin-bottom: 50px')
+
+		h2(style='margin-top:55px')
+			| Submit an algorithm
+
+		hr
+
+		h3
+			| Overview
+
+		p
+			| Our submission system is integrated with GitHub. To submit an algorithm, follow these steps:
+
+		ul
+
+			li
+				span.list-number
+					| 1
+				span
+					| Sign up for an account on 
+					a(href='https://github.com/join')
+						| GitHub 
+			li
+				span.list-number
+					| 2
+				span
+					| Fork the 
+					a(href='https://github.com/codeneuro/neurofinder')
+						| NeuroFinder 
+					| repository (see 
+					a(href='https://help.github.com/articles/fork-a-repo/')
+						| here 
+					| for an explanation of forking)
+			li
+				span.list-number
+					| 3
+				span
+					| Create a new branch of the repository (name the branch with your username)
+			li
+				span.list-number
+					| 4
+				span
+					| Add the folder 
+					span.inline-code
+						| neurofinder/submissions/your-user-name
+					| with the structure described below
+			li
+				span.list-number
+					| 5
+				span
+					| Submit your branch as a pull request and wait for your algorithm to be validated and run!
+
+		p
+			| Validation will be performed soon after submission, but it may take up to a week for the results of job execution to be posted. Please be patient! You will be notified of updates through comments on your pull request. Validation will be used to detect simple errors early on so they can be quickly fixed.
+
+		hr
+
+		h3
+			| Submission structure
+
+		p
+			| We have standardized a format for input data and a format for results using classes from the 
+			a(href='http://thunder-project.org/thunder/docs/install_ec2.html')
+				| Thunder  
+			| library. Your submission needs to provide a function called 
+			span.inline-code 
+				| run
+			| that takes a Thunder 
+			span.inline-code 
+				| Images
+			| object as input and returns a
+			span.inline-code 
+				| SourceModel
+			| as output. You should organize this function in a module as follows
+
+			pre
+				code.
+					neurofinder/submissions/your-user-name/info.json
+					neurofinder/submissions/your-user-name/run/run.py
+					neurofinder/submissions/your-user-name/run/__init__.py
+
+		p
+			| The file 
+			span.inline-code
+				| info.json
+			| should contain the following simple metadata about your submission:
+
+		pre
+				code.
+					{
+						"algorithm": "name of your algorithm",
+						"description": "description of your algorithm"
+					}
+
+		p
+			| The file
+			span.inline-code
+				| run.py
+			| should contain a function of the following form
+			
+		pre
+			code.
+				def run(data):
+						"""
+						Run a source extraction algorithm on an Images object
+
+						Parameters
+						----------
+						data : thunder.rdds.images.Images
+								The data the algorithm will be run on
+
+						Returns
+						-------
+						model : thunder.extraction.source.SourceModel
+								Sources found by the algorithm as a SourceModel object
+						"""
+
+						# your code here
+
+						return model
+
+		p
+			| See the 
+			a(href='https://github.com/CodeNeuro/neurofinder/tree/master/submissions/example-user')
+				| test submission 
+			| for a complete example.
+
+		p
+			| Your function can do whatever operations are required by your algorithm, but we encourage algorithms that use the existing Source Extraction API. The API emphasizes flexibility and modulartiy, allowing for a variety of algorithms. For example, many algorithms operate on spatio-temporal blocks of a data set, and you can implement a new one just by specifying the function to apply to each block.
+
+		hr
+
+		h3
+			| Environment
+
+		p
+			| All jobs will be run on an Amazon EC2 cluster, accessing the data sets from S3, in a standardized environment with 
+			a(href='http://spark-project.org/')
+				| Spark 
+			| , 
+			a(href='http://thunder-project.org/thunder/docs-dev/')
+				| Thunder
+			|  , and the 
+			a(href='https://store.continuum.io/cshop/anaconda/')
+				| Anaconda
+			|  distribution of scientific Python. The following are included libraries and specs:
+
+		ul
+
+		li.list-name
+			| Python v2.7.6
+
+		li.list-name
+			| Spark v1.3.0
+
+		li.list-name
+			| Numpy v1.9.2
+
+		li.list-name
+			| Scipy v0.15.1
+
+		li.list-name
+			| Scikit Learn v0.16.1
+
+		li.list-name
+			| Scikit Image v0.10.1
+
+		li.list-name
+			| Matplotlib v1.4.3
+
+		br
+
+		p
+			| You can start your own EC2 cluster with the same environment using Thunder's EC2 deployment scripts, see the 
+			a(href='http://thunder-project.org/thunder/docs-dev/install_ec2.html')
+				| instructions 
+			| . If your algorithm requires additional depencies, we should be able to add them to the standard environment, especially if they are pure Python packages. Please let us know if there are dependencies you need by reaching out on 
+			a(href='http://twitter.com/codeneuro')
+				| twitter 
+			| or through the 
+			a(href='https://gitter.im/CodeNeuro/neurofinder')
+				| chatroom
+			| .
+
+		hr
+
+		h3
+			| Training
+
+		p
+			| Several training data sets are available through the 
+			a(href='http://datasets.codeneuro.org')
+				| CodeNeuro data repository  
+			| . The easiest way to develop a new algorithm is to start a small cluster on Amazon EC2 and use Thunder's functionality to load the dataset and try your code. This is the same environment in which algorithms will be tested.
+
+		p
+			| From an instance on EC2 running Thunder, loading images and sources from one of the example data sets is easy:
+
+		pre
+			code.
+				path = "s3n://neuro.datasets/challenges/neurofinder/01.00/"
+				imgs = tsc.loadImages(path + "images")
+				sources = tsc.loadSources(path + "sources/sources.json")
+
+		p
+			| We recommend running in a Jupyter notebook to make it easy to visualize results and keep track of your progress. See the 
+			a(href='https://github.com/CodeNeuro/neurofinder/tree/master/notebooks')
+				| example Jupyter notebooks 
+			| for demos of viewing the data and running source extraction algorithms. 
+
+		p
+			| Given the size of the data sets, we cannot support direct downloads of the training data, but we will soon be adding the ability to download small subsets for local offline algorithm development.  
+
+		hr
+
+		h3
+			| Testing
+
+		p
+			| Your algorithm will be run on a subset of held-out test data, similar in kind to the training examples. The following metrics and statistics will be computed for each dataset and algorithm:
+
+		ul
+
+		li.list-name
+			| Accuracy (comparing spatial centers)
+
+		li.list-name
+			| Overlap (comparing spatial regions)
+
+		li.list-name
+			| Distance (average distance from true centers)
+
+		li.list-name
+			| Count (number of detected regions)
+
+		li.list-name
+			| Area (number of detected regions)
+
+		br
+
+		p
+			| You can read more about these metrics by browsing the 
+			a(href='http://thunder-project.org/thunder/docs-dev/')
+				| documentation 
+			| of Thunder's Source Extraction API, in particular the 
+			span.inline-code
+				| Source
+			| and 
+			span.inline-code
+				| SourceModel
+			| classes. 
