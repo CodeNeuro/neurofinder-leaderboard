@@ -368,6 +368,8 @@ table {
     }
 
     tr.details {
+        width: 250px;
+        max-width: 250px;
         margin-top: 0;
         td {
             // padding: 0;
@@ -473,11 +475,10 @@ table {
 
             &.details {
                 padding-right: 15px;
-                padding-left: 15px;
+                padding-left: 0px;
                 text-align: left;
 
                 text-overflow: ellipsis;
-                white-space: nowrap;
                 overflow: hidden;
             }
 
