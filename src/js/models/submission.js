@@ -24,8 +24,20 @@ var Submission = AmpersandModel.extend({
         var datasets = [];
         _.each(this.metrics, function(results) {
             _.each(results, function(result) {
-                if(result.dataset !== 'overall' && datasets.indexOf(result.dataset) === -1) {
+                if(datasets.indexOf(result.dataset) === -1) {
                     datasets.push(result.dataset);
+                }    
+            });
+        });
+        return datasets;
+    },
+
+    getDatasetDescriptions: function() {
+        var datasets = [];
+        _.each(this.metrics, function(results) {
+            _.each(results, function(result) {
+                if(datasets.indexOf(result.dataset) === -1) {
+                    datasets.push(result.description);
                 }    
             });
         });

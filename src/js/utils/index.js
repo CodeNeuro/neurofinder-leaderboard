@@ -36,19 +36,19 @@ module.exports = {
     getRangeFromName: function(name) {
         switch (name) {
             case 'accuracy':
-                var range = [0, 1]
+                var range = [0.2, 1]
                 break;
             case 'overlap':
-                var range = [0, 1]
+                var range = [0.1, 0.4]
                 break;
             case 'count':
-                var range = [0, 20]
+                var range = [150, 500]
                 break;
             case 'distance':
-                var range = [0, 5]
+                var range = [3, 6]
                 break;
             case 'area':
-                var range = [50, 100]
+                var range = [50, 300]
                 break;
             default:
                 var range = [0, 1]

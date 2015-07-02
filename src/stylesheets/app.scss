@@ -333,6 +333,7 @@ section {
 .dataset-name {
     text-align:left;
     margin-bottom:1px;
+    margin-top: 9px;
 }
 
 .dataset-contributors {
@@ -466,16 +467,21 @@ table {
                 text-align: center;
                 width: 75px;
                 border-radius: 10px;
+                opacity: 0.7;
             }
 
-            &.number:hover {
-                box-shadow: 0 0 0px 2px rgba(50,50,50,.55)
+            &.number-full {
+                opacity: 1.0;
             }
+
+/*            &.number:hover {
+                box-shadow: 0 0 0px 2px rgba(50,50,50,.55)
+            }*/
 
 
             &.details {
                 padding-right: 15px;
-                padding-left: 0px;
+                padding-left: 20px;
                 text-align: left;
 
                 text-overflow: ellipsis;
