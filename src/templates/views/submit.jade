@@ -64,7 +64,7 @@
 			| We have standardized a format for input data and a format for results using classes from the 
 			a(href='http://thunder-project.org/thunder/docs/install_ec2.html')
 				| Thunder  
-			| library. Your submission needs to provide a function called 
+			| library. Your submission needs to provide a Python function called 
 			span.inline-code 
 				| run
 			| that takes a Thunder 
@@ -77,9 +77,9 @@
 
 			pre
 				code.
-					neurofinder/submissions/your-user-name/info.json
-					neurofinder/submissions/your-user-name/run/run.py
-					neurofinder/submissions/your-user-name/run/__init__.py
+					neurofinder/submissions/user-name-algorithm-name/info.json
+					neurofinder/submissions/user-name-algorithm-name/run/run.py
+					neurofinder/submissions/user-name-algorithm-name/run/__init__.py
 
 		p
 			| The file 
@@ -136,7 +136,7 @@
 			| Environment
 
 		p
-			| All jobs will be run on an Amazon EC2 cluster, accessing the data sets from S3, in a standardized environment with 
+			| All jobs will be run on an Amazon EC2 cluster, accessing data from S3, in a standardized environment with 
 			a(href='http://spark-project.org/')
 				| Spark 
 			| , 
@@ -145,7 +145,13 @@
 			|  , and the 
 			a(href='https://store.continuum.io/cshop/anaconda/')
 				| Anaconda
-			|  distribution of scientific Python. The following are included libraries and specs:
+			|  distribution of scientific Python. We offer a 
+			a(href='http://notebooks.codeneuro.org')
+				| notebook service 
+			| that uses 
+			a(href='https://www.docker.com/')
+				| Docker 
+			| containers to deploy an interactive version of this same environment running in Jupyter notebooks. This is useful for testing and developing algorithms, but is currently limited to only one node. The following are included libraries and specs:
 
 		ul
 
@@ -173,10 +179,10 @@
 		br
 
 		p
-			| You can start your own EC2 cluster with the same environment using Thunder's EC2 deployment scripts, see the 
+			| Along with the test notebooks, you can start your own EC2 cluster with the same environment using Thunder's EC2 deployment scripts, see  
 			a(href='http://thunder-project.org/thunder/docs-dev/install_ec2.html')
 				| instructions 
-			| . If your algorithm requires additional depencies, we should be able to add them to the standard environment, especially if they are pure Python packages. Please let us know if there are dependencies you need by reaching out on 
+			| . If your algorithm requires additional depencies, we should be able to incorporate them, especially if they are pure Python packages. Please let us know if there are dependencies you need by reaching out on 
 			a(href='http://twitter.com/codeneuro')
 				| twitter 
 			| or through the 
@@ -193,10 +199,13 @@
 			| Several training data sets are available through the 
 			a(href='http://datasets.codeneuro.org')
 				| CodeNeuro data repository  
-			| . The easiest way to develop a new algorithm is to start a small cluster on Amazon EC2 and use Thunder's functionality to load the dataset and try your code. This is the same environment in which algorithms will be tested.
+			| under the codeneuro/challenges category. The easiest way to get started is to use our 
+			a(href='http://notebooks.codeneuro.org')
+				| notebook 
+			|	service to start an interactive environment that shows how data are loaded and how algorithms are implemented. For heavier testing, you'll want to start a small cluster on Amazon EC2 (we recommend ~5 nodes) and use Thunder's functionality to load the dataset and try your code. Both of these are the same environments in which algorithms will be tested.
 
 		p
-			| From an instance on EC2 running Thunder, loading images and sources from one of the example data sets is easy:
+			| From an instance or notebook running on EC2 with Thunder installed, loading images and sources from one of the example data sets is easy:
 
 		pre
 			code.
@@ -205,13 +214,7 @@
 				sources = tsc.loadSources(path + "sources/sources.json")
 
 		p
-			| We recommend running in a Jupyter notebook to make it easy to visualize results and keep track of your progress. See the 
-			a(href='https://github.com/CodeNeuro/neurofinder/tree/master/notebooks')
-				| example Jupyter notebooks 
-			| for demos of viewing the data and running source extraction algorithms. 
-
-		p
-			| Given the size of the data sets, we cannot support direct downloads of the training data, but we will soon be adding the ability to download small subsets for local offline algorithm development.  
+			| Given the size of the data sets, we cannot support direct downloads of the training data, but we will add the ability to download small subsets for local offline algorithm testing.  
 
 		hr
 

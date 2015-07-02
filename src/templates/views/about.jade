@@ -11,28 +11,28 @@
 			| Goal
 
 		p
-			| Reproducible data analysis requires validating methods against standard data sets. 
+			| Reproducible data analysis requires validating methods against vetted data sets in standardized environments. 
 
 		p
 			| In neuroscience, new analyses are repeatedly developed to solve problems faced by nearly all researchers. But comparisons between algorithms are rarely standardized across the community, or systematically vetted. Here we consider the "source extraction" problem: identifying neurons from time-varying image sequences. There are many existing algorithms but they have yet to be compared on standard data sets with ground truth.
 
 		p
-			| Our project has three core components:
+			| Core components:
 
 		ul
 			li.list-normal
-				| All algorithms will be run in a <em class="callout">common environment</em>, with a standardized format for both input data and algorithm output. We hope this will integrate a disparate collection of existing implementations.
+				| All algorithms will be run in a <em class="callout">common environment</em>, availiable as a Docker container, with a standard format for both input data and algorithm output. We hope this will integrate a disparate collection of existing implementations.
 
 			li.list-normal
-				| We will compute benchmarks on a <em class="callout">regular basis</em>, so that researchers can quickly find out how their algorithm performs across many data sets with a variety of metrics. 
+				| We will compute benchmarks on a <em class="callout">regular basis</em>, so that researchers can learn how their algorithms perform across many data sets with several metrics. 
 
 			li.list-normal
-				|	All algorithms will be provided by and for the <em class="callout">community</em>, and our GitHub-integrated submission system ensures that all algorithms will be immediately available and usable.
+				|	All algorithms will be provided by and for the <em class="callout">community</em>, and our GitHub-integrated submission system ensures that all algorithms will be immediately available.
 
 		br
 
 		p
-			| For this initial effort we have chosen a narrow focus: mouse two-photon calcium imaging with genetically encoded calcium indicators (e.g. GCaMP6). We will soon expand to incorporate other imaging modalities (light-sheet imaging, light-field imaging) and other species (zebrafish). 
+			| For this effort we have chosen a narrow focus: mouse two-photon laser-scanning microscopy with genetically encoded calcium indicators (e.g. GCaMP6). We will soon expand to incorporate other imaging modalities (light-sheet imaging, light-field imaging) and other species (zebrafish). 
 
 		hr
 
@@ -62,7 +62,10 @@
 			| All data sets for algorithm development are hosted via Amazon S3 at the 
 			a(href='http://datasets.codeneuro.org')
 				| CodeNeuro data repository  
-			| and can be accessed from instances running on EC2.
+			| and can be accessed from instances running on EC2, including from our 
+			a(href='http://datasets.codeneuro.org')
+				| notebook service 
+			| for easy exploration.
 
 		p
 			| In our standardized input format, data are organized into a folder with the following contents:
