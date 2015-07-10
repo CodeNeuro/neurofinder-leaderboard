@@ -42,13 +42,15 @@ var LeaderboardView = AmpersandView.extend({
     },
 
     hoverDatasetRemove: function(e) {
-        this.timeout = setTimeout( function() {
+        this.timeoutInfo = setTimeout( function() {
             $('.dataset-name').replaceWith("<p class='dataset-name'>" + "(hover for dataset info)" + "</p>")
         }, 100);
         
-        d3.selectAll(".number").filter("*:not(.number-full)").style('opacity', function(d) {
-            return 0.75
-        })
+        this.timeoutOpacity = setTimeout( function() {
+            d3.selectAll(".number").filter("*:not(.number-full)").style('opacity', function(d) {
+                return 0.75
+            })
+        }, 50);
     },
 
     hoverDataset: function(e) {
@@ -69,6 +71,10 @@ var LeaderboardView = AmpersandView.extend({
                 image.attr("src", newimg)
 
                 // update style on column
+                clearTimeout(this.timeoutOpacity)
+                d3.selectAll(".number").filter("*:not(.number-full)").style('opacity', function(d) {
+                    return 0.75
+                })
                 d3.selectAll("[data-data='" + dataset + "']")
                   .filter("[data-identifier='" + identifier + "']")
                   .filter("*:not(.number-full)")
@@ -85,7 +91,7 @@ var LeaderboardView = AmpersandView.extend({
             // get description
             var ind = _.indexOf(this.collection.models[0].getDatasets(), dataset)
             console.log(ind)
-            clearTimeout(this.timeout)
+            clearTimeout(this.timeoutInfo)
             $('.dataset-name').replaceWith("<p class='dataset-name'>" + dataset + "</p>")
             $('.dataset-contributors').replaceWith("<p class='dataset-contributors'>" + dataset + "</p>")
         }
