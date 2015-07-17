@@ -6,19 +6,26 @@
             .row
                 .column-10(style='margin-left: 20px')
 
-                    .row(style='margin-top:40px; margin-bottom:10px')
-                        .column-3.suffix-2
-                            h3(style='font-size: 24px')
-                                | Submission table
+                    .row(style='margin-top:40px; margin-bottom:15px')
+                        .column-2
+                            p(class='table-header-info')
+                                | Submission table 
 
                         .column-2
-                            p(style='margin-top: 6px; font-size: 18px; font-family: "CooperHewitt-LightItalic"; text-align:right;margin-bottom:1px;')
-                                | Data set
+                            span(class='icon-text', style='opacity:0.25')
+                                | click to see 
+                                i(class="fa fa-table fa-lg table-header-info") 
 
                         .column-3
+                            span(class='icon-text', style='opacity:0.25')
+                                | hover for 
+                                i(class="fa fa-image fa-lg table-header-info") 
+                                | and
+                                i(class="fa fa-info-circle fa-lg table-header-info") 
 
+                        .column-3
                             p.dataset-name
-                                |  (hover for dataset info)
+                                |  (dataset info)
 
                     .row
                         for submission in this.collection.models
@@ -33,42 +40,42 @@
                                                 small
                                                     | | #{submission.description}
 
-
                                             .url
                                                 a(href="#{submission.pull_request}").pull-request
                                                     | view pull request
 
-
                                         td
                                             .metric-label
-                                                | Accuracy
+                                                | Score
 
                                         for dataset in datasets
-                                            - var val = submission.getMetricValueForDataset('accuracy', dataset);
-                                            - var mid = this.utils.getMidpointFromName('accuracy')
-                                            td(style="background-color:#{this.utils.getColorFromScore(val, 'accuracy', 'Blues')}; color: #{val > mid ? 'white' : 'black'};", class="number number-full", data-data="#{dataset}", data-identifier="#{submission.id}")
+                                            - var val = submission.getMetricValueForDataset('score', dataset);
+                                            - var info = submission.getInfoForDataset('score', dataset)
+                                            - var mid = this.utils.getMidpointFromName('score')
+                                            td(style="background-color:#{this.utils.getColorFromScore(val, 'score', 'Blues')}; color: #{val > mid ? 'white' : 'black'};", class="number number-full", data-data="#{dataset}", data-info="#{info}", data-identifier="#{submission.id}")
                                                 | #{this.utils.preciseRound(val, 2)}
 
 
                                     tr(data-identifier="#{submission.id}").details
 
-                                        td    
+                                        td   
                                         td.submission-image
-                                            img(src="https://s3.amazonaws.com/code.neuro/neurofinder/images/#{submission.id}/#{datasets[0]}/sources.png", class="thumbnail", data-identifier="#{submission.id}")
+                                            img(src="https://s3.amazonaws.com/code.neuro/neurofinder/images/#{submission.id}/#{datasets[0]}/sources.png", class="thumbnail", data-identifier="#{submission.id}")    
                                         
                                         - var metric = submission.metrics.overlap
-                                        - var metricName = 'overlap'
+                                        - var metricName = 'recall'
                                         td.metric-label
                                             | #{metricName}
 
                                         for dataset in datasets
                                             - var val = submission.getMetricValueForDataset(metricName, dataset);
+                                            - var info = submission.getInfoForDataset(metricName, dataset)
                                             - var mid = this.utils.getMidpointFromName(metricName)
-                                            td(style="background-color:#{this.utils.getColorFromScore(val, metricName)}; color: #{val > mid ? 'white' : 'black'};", class="number", data-data="#{dataset}", data-identifier="#{submission.id}")
+                                            td(style="background-color:#{this.utils.getColorFromScore(val, metricName)}; color: #{val > mid ? 'white' : 'black'};", class="number", data-data="#{dataset}", data-info="#{info}" data-identifier="#{submission.id}")
                                                 | #{this.utils.preciseRound(val, 2)}
 
 
-                                    for metric, metricName in this._.omit(submission.metrics, 'accuracy', 'overlap')
+                                    for metric, metricName in this._.omit(submission.metrics, 'score', 'recall')
 
 
                                         tr(data-identifier="#{submission.id}").details
@@ -79,7 +86,8 @@
 
                                             for dataset in datasets
                                                 - var val = submission.getMetricValueForDataset(metricName, dataset);
+                                                - var info = submission.getInfoForDataset(metricName, dataset)
                                                 - var mid = this.utils.getMidpointFromName(metricName);
-                                                td(style="background-color:#{this.utils.getColorFromScore(val, metricName)}; color: #{val > mid ? 'white' : 'black'};", class="number", data-data="#{dataset}", data-identifier="#{submission.id}")
+                                                td(style="background-color:#{this.utils.getColorFromScore(val, metricName)}; color: #{val > mid ? 'white' : 'black'};", class="number", data-data="#{dataset}", data-info="#{info}", data-identifier="#{submission.id}")
                                                     | #{this.utils.preciseRound(val, 2)}
 

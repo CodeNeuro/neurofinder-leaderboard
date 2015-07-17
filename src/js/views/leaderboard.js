@@ -43,12 +43,12 @@ var LeaderboardView = AmpersandView.extend({
 
     hoverDatasetRemove: function(e) {
         this.timeoutInfo = setTimeout( function() {
-            $('.dataset-name').replaceWith("<p class='dataset-name'>" + "(hover for dataset info)" + "</p>")
+            $('.dataset-name').replaceWith("<p class='dataset-name'>" + "(dataset info)" + "</p>")
         }, 100);
         
         this.timeoutOpacity = setTimeout( function() {
             d3.selectAll(".number").filter("*:not(.number-full)").style('opacity', function(d) {
-                return 0.75
+                return 0.7
             })
         }, 50);
     },
@@ -60,6 +60,7 @@ var LeaderboardView = AmpersandView.extend({
 
         // get the data set name (from the number) and submission identifier (from table body)
         var dataset = $target.attr('data-data')
+        var datainfo = $target.attr('data-info')
         var identifier = $target.attr('data-identifier')
 
         // if both are defined
@@ -67,13 +68,15 @@ var LeaderboardView = AmpersandView.extend({
             if (dataset) {
                 // update image
                 var newimg = "https://s3.amazonaws.com/code.neuro/neurofinder/images/" + identifier + "/" + dataset + "/sources.png"
-                var image = $(e.target).parents('tbody').find('.submission-image').find('img')
-                image.attr("src", newimg)
+                if (dataset != "overall") {
+                    var image = $(e.target).parents('tbody').find('.submission-image').find('img')
+                    image.attr("src", newimg)
+                }
 
                 // update style on column
                 clearTimeout(this.timeoutOpacity)
                 d3.selectAll(".number").filter("*:not(.number-full)").style('opacity', function(d) {
-                    return 0.75
+                    return 0.7
                 })
                 d3.selectAll("[data-data='" + dataset + "']")
                   .filter("[data-identifier='" + identifier + "']")
@@ -82,7 +85,7 @@ var LeaderboardView = AmpersandView.extend({
                     if (identifier) {
                         return 1.0
                     } else {
-                        return 0.75
+                        return 0.7
                     }
                 })
             }
@@ -92,8 +95,7 @@ var LeaderboardView = AmpersandView.extend({
             var ind = _.indexOf(this.collection.models[0].getDatasets(), dataset)
             console.log(ind)
             clearTimeout(this.timeoutInfo)
-            $('.dataset-name').replaceWith("<p class='dataset-name'>" + dataset + "</p>")
-            $('.dataset-contributors').replaceWith("<p class='dataset-contributors'>" + dataset + "</p>")
+            $('.dataset-name').replaceWith("<p class='dataset-name'>" + datainfo + "</p>")
         }
 
     }

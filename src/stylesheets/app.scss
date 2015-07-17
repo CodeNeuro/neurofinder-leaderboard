@@ -192,8 +192,8 @@ pre {
 .inline-code {
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
+    padding-top: 5px;
+    padding-bottom: 4px;
     margin: 0;
     font-size: 90%;
     font-weight: 500;
@@ -319,7 +319,7 @@ section {
     border-radius: 5px;
     border-collapse: separate;
     border-spacing: 8px 8px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     cursor: pointer;
     border: solid 1px white;
     border-left: solid 6px white;
@@ -343,10 +343,34 @@ section {
     user-select: none;
 }
 
-.dataset-name {
+.table-header-info {
+    margin-top: 6px; 
+    font-size: 18px; 
+    font-family: "CooperHewitt-Light"; 
     text-align:left;
-    margin-bottom:1px;
-    margin-top: 9px;
+    margin-bottom:5px;
+}
+
+.icon-text {
+    margin-top: 6px; 
+    font-size: 18px; 
+    font-family: "CooperHewitt-Medium"; 
+    text-align:left;
+    margin-bottom:5px;
+}
+
+.fa {
+    padding-left: 8px;
+    padding-right: 12px;
+    color: rgb(10,10,10);
+}
+
+.dataset-name {
+    text-align:right;
+    margin-bottom:5px;
+    margin-top: 6px;
+    font-size: 18px; 
+    font-family: "CooperHewitt-Light"; 
 }
 
 .dataset-contributors {
@@ -493,8 +517,9 @@ table {
 
 
             &.details {
-                padding-right: 0px;
-                padding-left: 10px;
+                width: 550px;
+                padding-right: 15px;
+                padding-left: 20px;
                 text-align: left;
 
                 text-overflow: ellipsis;
@@ -517,6 +542,7 @@ table {
             }*/
 
             .metric-label {
+                width: 80px;
                 opacity: 0;
                 text-align: right;
                 text-transform: uppercase;

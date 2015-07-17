@@ -20,6 +20,18 @@ var Submission = AmpersandModel.extend({
         return _.findWhere(results, {dataset: dataset}).value;
     },
 
+    getInfoForDataset: function(metric, dataset) {
+        var results = this.metrics[metric];
+        var entry = _.findWhere(results, {dataset: dataset})
+        var out
+        if (dataset == "overall") {
+            out = "overall"
+        } else {
+            out = entry.animal + " " + entry.region + ", " + entry.lab
+        }
+        return out
+    },
+
     getDatasets: function() {
         var datasets = [];
         _.each(this.metrics, function(results) {

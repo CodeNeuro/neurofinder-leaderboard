@@ -35,20 +35,20 @@ module.exports = {
 
     getRangeFromName: function(name) {
         switch (name) {
-            case 'accuracy':
-                var range = [0.2, 1]
+            case 'score':
+                var range = [0, 1]
                 break;
             case 'overlap':
-                var range = [0.1, 0.4]
+                var range = [0.0, 1.0]
                 break;
-            case 'count':
-                var range = [150, 500]
+            case 'recall':
+                var range = [0.0, 1.0]
                 break;
-            case 'distance':
-                var range = [3, 6]
+            case 'precision':
+                var range = [0, 1.0]
                 break;
-            case 'area':
-                var range = [50, 300]
+            case 'exactness':
+                var range = [0, 1.0]
                 break;
             default:
                 var range = [0, 1]
@@ -59,8 +59,26 @@ module.exports = {
 
     getColorFromScore: function(score, name, colormap) {
 
-
-        var colormap = colormap || 'OrRd'
+        switch (name) {
+            case 'score':
+                var colormap = 'Blues'
+                break;
+            case 'overlap':
+                var colormap = 'YlOrRd'
+                break;
+            case 'hits':
+                var colormap = 'YlOrRd'
+                break;
+            case 'errors':
+                var colormap = 'YlOrRd'
+                break;
+            case 'excess':
+                var colormap = 'YlOrRd'
+                break;
+            default:
+                var colormap = 'YlOrRd'
+                break;
+        }
 
         var range = this.getRangeFromName(name)
 

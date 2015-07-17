@@ -53,7 +53,7 @@
 					| Submit your branch as a pull request and wait for your algorithm to be validated and run!
 
 		p
-			| Validation will be performed soon after submission, but it may take up to a week for the results of job execution to be posted. Please be patient! You will be notified of updates through comments on your pull request. Validation will be used to detect simple errors early on so they can be quickly fixed.
+			| Jobs will be validated and executed frequently, but please be patient! You will be notified of updates or any errors through comments on your pull request. 
 
 		hr
 
@@ -61,19 +61,19 @@
 			| Submission structure
 
 		p
-			| We have standardized a format for input data and a format for results using classes from the 
+			| We have standardized a format for input data and algorithm outputs, partly based on classes from the 
 			a(href='http://thunder-project.org/thunder/docs/install_ec2.html')
 				| Thunder  
 			| library. Your submission needs to provide a Python function called 
 			span.inline-code 
 				| run
-			| that takes a Thunder 
+			| that takes an 
 			span.inline-code 
 				| Images
-			| object as input and returns a
+			| object as input (an array of images) and returns a
 			span.inline-code 
 				| SourceModel
-			| as output. You should organize this function in a module as follows
+			| as output (a collection of coordinates). You should organize this function in a module as follows
 
 			pre
 				code.
@@ -102,14 +102,17 @@
 			
 		pre
 			code.
-				def run(data):
+				def run(data, info):
 						"""
-						Run a source extraction algorithm on an Images object
+						Run a source extraction algorithm on an image sequence.
 
 						Parameters
 						----------
 						data : thunder.rdds.images.Images
-								The data the algorithm will be run on
+							The data the algorithm will be run on
+
+						info : dict
+							Metadata associated with the dataset
 
 						Returns
 						-------
@@ -127,7 +130,7 @@
 			| for a complete example.
 
 		p
-			| Your function can do whatever operations are required by your algorithm, but we encourage algorithms that use the existing Source Extraction API. The API emphasizes flexibility and modulartiy, allowing for a variety of algorithms. For example, many algorithms operate on spatio-temporal blocks of a data set, and you can implement a new one just by specifying the function to apply to each block.
+			| Your function can do whatever operations are required by your algorithm, so long as it runs within this environment. We encourage algorithms that use Thunder's existing Source Extraction API. For example, many algorithms operate on spatio-temporal blocks of a data set, and you can implement a new one just by specifying the function to apply to each block.
 
 		hr
 
@@ -144,13 +147,13 @@
 			|  , and the 
 			a(href='https://store.continuum.io/cshop/anaconda/')
 				| Anaconda
-			|  distribution of scientific Python. We offer a 
+			|  distribution of Python with most of the scientific Python stack (e.g. numpy, scipy, pandas, scikit-learn). We offer a 
 			a(href='http://notebooks.codeneuro.org')
 				| notebook service 
 			| that uses 
 			a(href='https://www.docker.com/')
 				| Docker 
-			| containers to deploy an interactive version of this same environment running in Jupyter notebooks. This is useful for testing and developing algorithms, but is currently limited to only one node. The following are included libraries and specs:
+			| containers to deploy an interactive version of this environment running in Jupyter notebooks. This is useful for testing and developing algorithms, but is currently limited to only one node. The following are included libraries and specs:
 
 		ul
 
@@ -178,10 +181,10 @@
 		br
 
 		p
-			| Along with the test notebooks, you can start your own EC2 cluster with the same environment using Thunder's EC2 deployment scripts, see  
+			| The test notebook environment runs on a single node, so is designed for testing on smaller subsets of the data. For more scalable testing, you can start your own EC2 cluster with the same environment with Spark and Thunder's EC2 deployment scripts, see  
 			a(href='http://thunder-project.org/thunder/docs-dev/install_ec2.html')
 				| instructions 
-			| . If your algorithm requires additional depencies, we should be able to incorporate them, especially if they are pure Python packages. Please let us know if there are dependencies you need by reaching out on 
+			| . If an algorithm requires additional depencies, we should be able to add them, especially pure Python packages. Please let us know if there are dependencies you need by reaching out on 
 			a(href='http://twitter.com/codeneuro')
 				| twitter 
 			| or through the 
@@ -195,13 +198,13 @@
 			| Training
 
 		p
-			| Several training data sets are available through the 
+			| Training data is available through the 
 			a(href='http://datasets.codeneuro.org')
 				| CodeNeuro data repository  
-			| under the codeneuro/challenges category. The easiest way to get started is to use our 
+			| under the codeneuro/challenges category. The best way to get started is to use our 
 			a(href='http://notebooks.codeneuro.org')
 				| notebook 
-			|	service to start an interactive environment that shows how data are loaded and how algorithms are implemented. For heavier testing, you'll want to start a small cluster on Amazon EC2 (we recommend ~5 nodes) and use Thunder's functionality to load the dataset and try your code. Both of these are the same environments in which algorithms will be tested.
+			|	service to start an interactive environment for testing data loading and prototyping analyses. For heavier testing, you'll want to start a small cluster on Amazon EC2 (we recommend ~5 nodes) and run the same code.
 
 		p
 			| From an instance or notebook running on EC2 with Thunder installed, loading images and sources from one of the example data sets is easy:
@@ -213,7 +216,7 @@
 				sources = tsc.loadSources(path + "sources/sources.json")
 
 		p
-			| Given the size of the data sets, we cannot support direct downloads of the training data, but we will add the ability to download small subsets for local offline algorithm testing.  
+			| Given the size of the data sets, we do not support direct downloads of all training data, but we will add direct downloads of small subsets for local testing.
 
 		hr
 
@@ -221,32 +224,42 @@
 			| Testing
 
 		p
-			| Your algorithm will be run on a subset of held-out test data, similar in kind to the training examples. The following metrics and statistics will be computed for each dataset and algorithm:
+			| Algorithms will be run on a subset of held-out test data, similar in kind to the training examples. The following metrics will be computed for each dataset and algorithm (higher is better for all):
 
 		ul
 
-		li.list-name
-			| Accuracy (comparing spatial centers)
+		p
+			span.inline-code
+				| recall
+			| is the fraction of true sources for which a source was correctly identified (within a distance threshold)
 
-		li.list-name
-			| Overlap (comparing spatial regions)
+		p
+			span.inline-code
+				| precision
+			| is the fraction of estimated sources that correctly identified a true source (within a distance threshold)
 
-		li.list-name
-			| Distance (average distance from true centers)
+		p
+			span.inline-code
+				| score
+			| combines recall and precision into a single number (via a harmonic mean)
 
-		li.list-name
-			| Count (number of detected regions)
+		p
+			span.inline-code
+				| overlap
+			| is the fraction of correct pixel overlap for those sources that were correctly identified
 
-		li.list-name
-			| Area (number of detected regions)
+		p
+			span.inline-code
+				| exactness
+			| is the precision associated with pixel overlap
 
 		br
 
 		p
-			| You can read more about these metrics by browsing the 
+			| You can read more about these metrics by browsing Thunder's 
 			a(href='http://thunder-project.org/thunder/docs-dev/')
 				| documentation 
-			| of Thunder's Source Extraction API, in particular the 
+			| , in particular the 
 			span.inline-code
 				| Source
 			| and 

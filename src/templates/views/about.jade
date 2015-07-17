@@ -11,28 +11,31 @@
 			| Goal
 
 		p
+			| In neuroscience, there are many open analytical problems that demand robust, scalable solutions.
+
+		p(style='font-size:22px; font-family:"CooperHewitt-LightItalic"; width:600px')
 			| Reproducible data analysis requires validating methods against vetted data sets in standardized environments. 
 
 		p
-			| In neuroscience, new analyses are repeatedly developed to solve problems faced by nearly all researchers. But comparisons between algorithms are rarely standardized across the community, or systematically vetted. Here we consider the "source extraction" problem: identifying neurons from time-varying image sequences. There are many existing algorithms but they have yet to be compared on standard data sets with ground truth.
+			| Here we consider "source extraction": identifying neurons from time-varying image sequences. There are many existing algorithms but they have yet to be compared on standard data sets with ground truth.
 
 		p
 			| Core components:
 
 		ul
 			li.list-normal
-				| All algorithms will be run in a <em class="callout">common environment</em>, availiable as a Docker container, with a standard format for both input data and algorithm output. We hope this will integrate a disparate collection of existing implementations.
+				| All algorithms will be run in a <em class="callout">common environment</em>, availiable as a Docker container, with a standard format for input and output. We want this to integrate a disparate collection of existing implementations.
 
 			li.list-normal
-				| We will compute benchmarks on a <em class="callout">regular basis</em>, so that researchers can learn how their algorithms perform across many data sets with several metrics. 
+				| We will compute benchmarks on a <em class="callout">regular basis</em>, to show researchers how their algorithms perform across many data sets with several metrics. 
 
 			li.list-normal
-				|	All algorithms will be provided by and for the <em class="callout">community</em>, and our GitHub-integrated submission system ensures that all algorithms will be immediately available.
+				|	All algorithms will be provided by and for the <em class="callout">community</em>, and our GitHub-integrated submission system ensures that algorithms will be immediately available as open source.
 
 		br
 
 		p
-			| For this effort we have chosen a narrow focus: mouse two-photon laser-scanning microscopy with genetically encoded calcium indicators (e.g. GCaMP6). We will soon expand to incorporate other imaging modalities (light-sheet imaging, light-field imaging) and other species (zebrafish). 
+			| We start with a narrow focus: mouse two-photon laser-scanning microscopy with genetically encoded calcium indicators (e.g. GCaMP6). We will expand to other imaging modalities (light-sheet imaging, light-field imaging) and other species (zebrafish). 
 
 		hr
 
@@ -59,7 +62,7 @@
 		br
 
 		p
-			| All data sets for algorithm development are hosted via Amazon S3 at the 
+			| All data are hosted via Amazon S3 at the 
 			a(href='http://datasets.codeneuro.org')
 				| CodeNeuro data repository  
 			| and can be accessed from instances running on EC2, including from our 
@@ -68,7 +71,7 @@
 			| for easy exploration.
 
 		p
-			| In our standardized input format, data are organized into a folder with the following contents:
+			| In our standard input format, data are organized into a folder with:
 
 		pre
 			code.
@@ -83,10 +86,10 @@
 			| The 
 			span.inline-code 
 				| info.json
-			| file contains metadata like contributors and imaging method (see an 
+			| file contains metadata like contributors, imaging method, and spatial scale (see an 
 			a(href="https://s3.amazonaws.com/neuro.datasets/challenges/neurofinder/00.00/info.json")
 				| example
-			| )
+			| ).
 
 		p 
 			| The 
@@ -105,20 +108,21 @@
 				}
 
 		p
-			| Finally, the
+			| The
 			span.inline-code 
 				| sources.json
-			| file contains describes the identified neurons using the following format:
+			| file contains the identified neurons using the following standard format (inspired by 
+			a(href='http://geojson.org/')
+				| GeoJSON
+			| ).
 
 		pre
 			code.
 				[
 					{
-						"id" : 1,
+						"id": 1,
 						"coordinates": [[x0,y0], [x1,y1], ...],
 						"values": [v0, v1, ...],
-						"bbox" : [xx,xy,yx,yy],
-						"centroid" : [x,y]
 					},
 					...
 				]
@@ -127,10 +131,10 @@
 			| where 
 			span.inline-code 
 				| coordinates
-			| are a list of the coordinates of pixels included in that source, and  
+			| are the coordinates of pixels included in that source, and  
 			span.inline-code 
 				| values
-			| are an optional list of non-zero weights on those pixels (otherwise assumed to be binary). For the example training data, all sources have been manually vetted and curated, and a subset are based on an ground-truth anatomical nuclear marker.
+			| are an optional list of pixel weights (otherwise assumed binary). For training data, all sources have been vetted and curated, and a subset are based on ground-truth anatomical markers.
 
 		hr
 
@@ -149,16 +153,22 @@
 		p
 			| This website and automatic job runner was also begun at the hackathon and further developed by Matt Conlen, Maxwell Rebo, Jeremy Freeman, Michael Broxton, Aero Wang, and Yangbo Du.
 
+		p 
+			| The source code of the website, job runner, and leaderboard are all availabe on 
+			a(href='http://github.com/codeneuro')
+				| GitHub
+			| .
+
 		hr
 
 		h3
 			| Contact
 
 		p
-			| If you have questions, difficulty submitting, or a dataset to add, please reach out on 
+			| If you have questions or difficulty submitting, want to add a dataset, or get involved, reach out on 
 			a(href='http://twitter.com/codeneuro')
 				| twitter 
-			| or join the 
+			| or our 
 			a(href='https://gitter.im/CodeNeuro/neurofinder')
 				| chatroom
 			| .
