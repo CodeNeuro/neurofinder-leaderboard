@@ -7,9 +7,6 @@
 
 		hr
 
-		h3
-			| Overview
-
 		p
 			| Our submission system is integrated with GitHub. To submit an algorithm, follow these steps:
 
@@ -44,7 +41,7 @@
 				span
 					| Add the folder 
 					span.inline-code
-						| neurofinder/submissions/your-user-name
+						| neurofinder/submissions/user-name-algorithm-name
 					| with the structure described below
 			li
 				span.list-number
@@ -147,13 +144,7 @@
 			|  , and the 
 			a(href='https://store.continuum.io/cshop/anaconda/')
 				| Anaconda
-			|  distribution of Python with most of the scientific Python stack (e.g. numpy, scipy, pandas, scikit-learn). We offer a 
-			a(href='http://notebooks.codeneuro.org')
-				| notebook service 
-			| that uses 
-			a(href='https://www.docker.com/')
-				| Docker 
-			| containers to deploy an interactive version of this environment running in Jupyter notebooks. This is useful for testing and developing algorithms, but is currently limited to only one node. The following are included libraries and specs:
+			|  distribution of Python. The following are included libraries and specs:
 
 		ul
 
@@ -161,7 +152,7 @@
 			| Python v2.7.6
 
 		li.list-name
-			| Spark v1.3.0
+			| Spark v1.3.1
 
 		li.list-name
 			| Numpy v1.9.2
@@ -181,10 +172,19 @@
 		br
 
 		p
-			| The test notebook environment runs on a single node, so is designed for testing on smaller subsets of the data. For more scalable testing, you can start your own EC2 cluster with the same environment with Spark and Thunder's EC2 deployment scripts, see  
+			| We offer a 
+			a(href='http://notebooks.codeneuro.org')
+				| notebook service 
+			| that uses 
+			a(href='https://www.docker.com/')
+				| Docker 
+			| containers to deploy an interactive version of this environment running in Jupyter notebooks. This is useful for testing and developing algorithms, but is currently limited to only one node so is most useful for testing on subsets of the data. 
+
+		p
+			| For more scalable testing, you can start your own EC2 cluster with the same environment with Spark and Thunder's EC2 deployment scripts, see the 
 			a(href='http://thunder-project.org/thunder/docs-dev/install_ec2.html')
 				| instructions 
-			| . If an algorithm requires additional depencies, we should be able to add them, especially pure Python packages. Please let us know if there are dependencies you need by reaching out on 
+			| . If an algorithm requires additional dependencies, we should be able to add them, especially pure Python packages. Just reach out to us on 
 			a(href='http://twitter.com/codeneuro')
 				| twitter 
 			| or through the 
@@ -207,7 +207,7 @@
 			|	service to start an interactive environment for testing data loading and prototyping analyses. For heavier testing, you'll want to start a small cluster on Amazon EC2 (we recommend ~5 nodes) and run the same code.
 
 		p
-			| From an instance or notebook running on EC2 with Thunder installed, loading images and sources from one of the example data sets is easy:
+			| From an instance or notebook running on EC2 with Thunder installed, loading images and sources is easy:
 
 		pre
 			code.
@@ -216,7 +216,7 @@
 				sources = tsc.loadSources(path + "sources/sources.json")
 
 		p
-			| Given the size of the data sets, we do not support direct downloads of all training data, but we will add direct downloads of small subsets for local testing.
+			| Given the size of the data sets, we do not support direct downloads of all training data, but we may add direct downloads of small subsets for local testing.
 
 		hr
 

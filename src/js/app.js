@@ -40,12 +40,13 @@ leaderboard.fetch({
 });
 
 
+
 $('#about').click(function() {
     switcher.set(aboutView);
-})
+});
 $('#submit').click(function() {
     switcher.set(submitView);
-})
+});
 $('#current').click(function() {
     switcher.set(leaderboardView);
-})
+});

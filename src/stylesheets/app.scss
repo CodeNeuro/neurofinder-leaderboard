@@ -141,6 +141,37 @@ li {
     border: solid 5px white;
     width: 300px;
     display: block;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    transition: all 0.2s;
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
+}
+
+.thumbnail:hover {
+    border: solid 5px rgb(190,190,190);
+}
+
+.thumbnail-large {
+    display: none;
+    position: absolute;
+    z-index: 20;
+}
+
+.thumbnail-large-inset {
+    border: solid 8px rgba(255,255,255,0.5);
+    border-radius: 10px;
+}
+
+#background{
+    display: none;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgb(10,10,10);
+    z-index: 1;
 }
 
 .round {

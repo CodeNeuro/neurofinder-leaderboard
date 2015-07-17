@@ -1,4 +1,6 @@
 .leaderboard-container.noselect
+    div(id='large' class='thumbnail-large')
+    div(id='background')
 
     .row.main
         .column-12
@@ -60,7 +62,7 @@
 
                                         td   
                                         td.submission-image
-                                            img(src="https://s3.amazonaws.com/code.neuro/neurofinder/images/#{submission.id}/#{datasets[0]}/sources.png", class="thumbnail", data-identifier="#{submission.id}")    
+                                            img(src="https://s3.amazonaws.com/code.neuro/neurofinder/images/#{submission.id}/#{datasets[0]}/sources.png", class="thumbnail", id='thumbnail', data-identifier="#{submission.id}")    
                                         
                                         - var metric = submission.metrics.overlap
                                         - var metricName = 'recall'

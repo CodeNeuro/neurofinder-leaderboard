@@ -7,30 +7,30 @@
 
 		hr
 
-		h3
-			| Goal
+		p
+			| In neuroscience, there are many open data analysis problems that demand robust, scalable solutions. 
+
+		p(style='font-size:22px; font-family:"CooperHewitt-LightItalic"; max-width:600px')
+			| We want our solutions to be effective and reproducible. 
+
+		p 
+			| So we need to validate our methods against vetted data sets in standardized environments.
 
 		p
-			| In neuroscience, there are many open analytical problems that demand robust, scalable solutions.
-
-		p(style='font-size:22px; font-family:"CooperHewitt-LightItalic"; width:600px')
-			| Reproducible data analysis requires validating methods against vetted data sets in standardized environments. 
+			| Here we consider "source extraction": identifying neurons from high-resolution time-varying image sequences. There are many existing algorithms but they have yet to be compared on standard data sets with ground truth.
 
 		p
-			| Here we consider "source extraction": identifying neurons from time-varying image sequences. There are many existing algorithms but they have yet to be compared on standard data sets with ground truth.
+			| Our approach:
 
-		p
-			| Core components:
-
-		ul
+		ul(style='max-width:600px')
 			li.list-normal
-				| All algorithms will be run in a <em class="callout">common environment</em>, availiable as a Docker container, with a standard format for input and output. We want this to integrate a disparate collection of existing implementations.
+				| All algorithms will be run in a <em class="callout">common environment</em>, availiable as a Docker container, with standard input and output formats.
 
 			li.list-normal
 				| We will compute benchmarks on a <em class="callout">regular basis</em>, to show researchers how their algorithms perform across many data sets with several metrics. 
 
 			li.list-normal
-				|	All algorithms will be provided by and for the <em class="callout">community</em>, and our GitHub-integrated submission system ensures that algorithms will be immediately available as open source.
+				|	All algorithms will be provided by and for the <em class="callout">community</em>, and made availiable as open source through our GitHub-integrated submission system.
 
 		br
 

@@ -15,8 +15,35 @@ var LeaderboardView = AmpersandView.extend({
 
     events: {
         'click .subtable': 'toggleRowDetails',
+        'click .thumbnail': 'imageZoom',
         'mouseover .number': 'hoverDataset',
         'mouseout .number': 'hoverDatasetRemove'
+    },
+
+    imageZoom: function (e) {
+        console.log(e)
+        console.log('got click')
+        var src = $(e.target).attr('src')
+        var width = 500
+        var height = 500
+        
+        $("#large").html("<img class='thumbnail-large-inset' src=" + src + " width=" + width + "px + height=" + height + "px />")
+           .css("top", ( $(window).height() - height ) / 2+$(window).scrollTop() + "px")
+           .css("left", ( $(window).width() - width ) / 2+$(window).scrollLeft() + "px")
+           .fadeIn('fast');
+
+        $("#background").css({"opacity" : "0.7"})
+              .fadeIn('fast');  
+
+        $("#background").click(function(){
+            $("#background").fadeOut('fast');
+            $("#large").fadeOut('fast');
+        });
+
+        $("#large").click(function(){
+            $("#background").fadeOut();
+            $("#large").fadeOut();
+        });
     },
 
     toggleRowDetails: function(e) {
