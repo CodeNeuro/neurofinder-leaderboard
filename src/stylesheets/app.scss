@@ -417,6 +417,9 @@ table {
 
             &.metric-label {
                 padding-right: 15px;
+                width: 80px;
+                text-align: right;
+                text-transform: uppercase;
             }
         }
     }
@@ -501,11 +504,12 @@ table {
             }
 
             &.number {
-                font-family: monospace;
+                font-family: Inconsolata;
                 text-align: center;
                 width: 75px;
                 border-radius: 10px;
                 opacity: 0.7;
+                font-size: 100%;
             }
 
             &.number-full {
