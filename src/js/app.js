@@ -39,8 +39,10 @@ leaderboard.fetch({
 
         if (hash == '#about') {
             switcher.set(aboutView);
+            $('body').animate({scrollTop:0}, 0)
         } else if (hash == '#submit') {
             switcher.set(submitView)
+            $('body').animate({scrollTop:0}, 0)
         }
         
     }
