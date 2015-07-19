@@ -21,6 +21,8 @@ var leaderboardView;
 var submitView = new SubmitView();
 var aboutView = new AboutView();
 
+var hash = window.location.hash;
+
 leaderboard.fetch({
     success: function(collection) {
 
@@ -35,10 +37,15 @@ leaderboard.fetch({
             collection: collection
         });
 
+        if (hash == '#about') {
+            switcher.set(aboutView);
+        } else if (hash == '#submit') {
+            switcher.set(submitView)
+        }
+        
     }
 
 });
-
 
 
 $('#about').click(function() {
