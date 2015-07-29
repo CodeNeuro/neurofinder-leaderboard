@@ -365,6 +365,8 @@ section {
     border: solid 1px white;
     border-left: solid 6px white;
     pointer-events: all !important;
+    table-layout: fixed;
+    max-width: 100%;
 }
 
 .subtable:hover {
@@ -424,7 +426,7 @@ table {
 
     transition: all 0.15s ease;
 
-    width: 100%;
+    max-width: 100%;
 
     .left {
         text-align: left;
@@ -523,8 +525,8 @@ table {
                 padding-left: 0px;
                 width: 40px;
                 height: 40px;
-                padding-top: 20px;
                 padding-right: 0;
+                padding-top: 15px;
                 img {
                     vertical-align: middle;
                     width: 75px;
